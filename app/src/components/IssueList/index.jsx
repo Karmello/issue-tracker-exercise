@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Header, Segment } from "semantic-ui-react";
 
-import { createIssueRequest } from "./../../http/requests/index";
+import { getIssuesRequest } from "./../../http/requests/index";
 
 const IssueList = () => {
   useEffect(() => {
-    createIssueRequest().then(
+    getIssuesRequest().then(
       () => {},
       () => {}
     );

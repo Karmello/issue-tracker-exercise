@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
-import { CreateIssueController } from "./controllers/index.js";
+import {
+  CreateIssueController,
+  GetIssuesController,
+} from "./controllers/index.js";
 
 dotenv.config();
 
@@ -17,6 +20,7 @@ app.use((req, res, next) => {
 });
 
 CreateIssueController(app);
+GetIssuesController(app);
 
 mongoose
   .connect(MONGO_URI, {
