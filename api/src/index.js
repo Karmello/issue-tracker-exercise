@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import {
   CreateIssueController,
   GetIssuesController,
+  UpdateIssueController,
 } from "./controllers/index.js";
 
 dotenv.config();
@@ -21,11 +22,13 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "PUT");
   next();
 });
 
 CreateIssueController(app);
 GetIssuesController(app);
+UpdateIssueController(app);
 
 mongoose
   .connect(MONGO_URI, {
