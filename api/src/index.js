@@ -2,15 +2,17 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+import { CreateIssueController } from "./controllers/index.js";
+
 dotenv.config();
 
-const { PORT, MONGO_URI } = process.env;
+const { MONGO_URI, PORT } = process.env;
 
 const app = express();
-const dbConnectionString = MONGO_URI;
+CreateIssueController(app);
 
 mongoose
-  .connect(dbConnectionString, {
+  .connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
