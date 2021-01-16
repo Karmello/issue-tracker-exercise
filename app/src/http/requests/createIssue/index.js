@@ -1,7 +1,6 @@
 import api from "./../../index";
 
-const createIssue = (body) => {
-  return api.post("http://localhost:9000/api/create", body);
-};
+const createIssue = (data) =>
+  api.post("http://localhost:9000/api/create", data);
 
 export default createIssue;

@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import bodyParser from "body-parser";
 
 import {
   CreateIssueController,
@@ -14,8 +15,12 @@ const { MONGO_URI, PORT } = process.env;
 
 const app = express();
 
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
 

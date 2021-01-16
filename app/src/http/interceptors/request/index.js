@@ -1,3 +1,3 @@
-export default (config) => {
+export default async (config) => {
   return config;
 };
