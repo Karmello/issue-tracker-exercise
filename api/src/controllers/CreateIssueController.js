@@ -1,7 +1,7 @@
 import IssueModel from "./../models/Issue.js";
 
 export default (app) =>
-  app.post("/create", (req, res) => {
+  app.post("/api/create", (req, res) => {
     const newIssue = new IssueModel(req.body);
     newIssue
       .save()

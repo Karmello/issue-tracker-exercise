@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import morgan from "morgan";
 
 import { CreateIssueController } from "./controllers/index.js";
 
@@ -9,6 +10,12 @@ dotenv.config();
 const { MONGO_URI, PORT } = process.env;
 
 const app = express();
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 CreateIssueController(app);
 
 mongoose
