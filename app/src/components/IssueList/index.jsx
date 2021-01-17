@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Header, Segment, Dropdown, Grid } from "semantic-ui-react";
 
 import { getIssuesRequest, updateIssue } from "./../../http/requests/index";
+import Status from "./../../constants/Status";
 
-const IssueList = () => {
-  const [list, setList] = useState([]);
+const IssueList = ({ list, setList }) => {
   const [loading, setLoading] = useState(false);
 
   const onStatusChange = (_id) => (e, data) => {
@@ -12,21 +12,17 @@ const IssueList = () => {
     const newList = [...list];
     newList[index].loading = true;
     setList(newList);
+
     updateIssue(_id, data.value).then(
       (res) => {
-        setTimeout(() => {
-          const index = list.findIndex((item) => item._id === _id);
-          const newList = [...list];
-          newList[index] = res.data;
-          setList(newList);
-        }, 500);
+        const newList = [...list];
+        newList[index] = res.data;
+        setList(newList);
       },
       (err) => {
-        setTimeout(() => {
-          const newList = [...list];
-          delete newList[index].loading;
-          setList(newList);
-        }, 500);
+        const newList = [...list];
+        delete newList[index].loading;
+        setList(newList);
       }
     );
   };
@@ -35,16 +31,12 @@ const IssueList = () => {
     setLoading(true);
     getIssuesRequest().then(
       (res) => {
-        setTimeout(() => {
-          setLoading(false);
-          setList(res.data);
-        }, 500);
+        setLoading(false);
+        setList(res.data);
       },
       (err) => {
-        setTimeout(() => {
-          setLoading(false);
-          setList([]);
-        }, 500);
+        setLoading(false);
+        setList([]);
       }
     );
   }, []);
@@ -54,30 +46,36 @@ const IssueList = () => {
       <Header attached="top" content="Issues" />
       <Segment attached="bottom" loading={loading}>
         <div style={{ minHeight: "50px" }}>
-          {list.map(({ _id, title, description, status, loading }) => (
-            <Grid columns={2} key={_id}>
-              <Grid.Column width={13}>
-                <Header>
-                  {title}
-                  <Header.Subheader>{description}</Header.Subheader>
-                </Header>
-              </Grid.Column>
-              <Grid.Column width={3}>
-                <Dropdown
-                  loading={loading}
-                  disabled={loading}
-                  placeholder="Status"
-                  value={status}
-                  options={[
-                    { value: "OPEN", text: "Open" },
-                    { value: "PENDING", text: "Pending" },
-                    { value: "CLOSED", text: "Closed" },
-                  ]}
-                  onChange={onStatusChange(_id)}
-                />
-              </Grid.Column>
-            </Grid>
-          ))}
+          {list &&
+            list.map(({ _id, title, description, status, loading }) => (
+              <Grid columns={2} key={_id}>
+                <Grid.Column width={13}>
+                  <Header>
+                    {title}
+                    <Header.Subheader>{description}</Header.Subheader>
+                  </Header>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Dropdown
+                    loading={loading}
+                    disabled={status === Status.Closed || loading}
+                    placeholder="Status"
+                    value={status}
+                    options={[
+                      {
+                        value: Status.Open,
+                        text: "Open",
+                        disabled: status !== Status.Open,
+                      },
+                      { value: Status.Pending, text: "Pending" },
+                      { value: Status.Closed, text: "Closed" },
+                    ]}
+                    onChange={onStatusChange(_id)}
+                  />
+                </Grid.Column>
+              </Grid>
+            ))}
+          {list && list.length === 0 && "Nothing to show"}
         </div>
       </Segment>
     </>
