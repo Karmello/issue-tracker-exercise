@@ -1,5 +1,12 @@
 # issue-tracker-exercise
 
+#### Main technologies
+
+- Node
+- MongoDB
+- React
+- create-react-app
+
 #### Main libraries
 
 - Express
