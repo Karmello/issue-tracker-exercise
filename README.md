@@ -4,7 +4,7 @@
 
 - introduce Webpack aliases for absolute import paths
 - add Typescript for strong typing
-- installl and configure Prettier and TSLint
+- install and configure Prettier and TSLint
 - extract all harcoded strings and move them into dictionary file
 - make UI more pretty
 - create FE Node server for SSR and handling API requests

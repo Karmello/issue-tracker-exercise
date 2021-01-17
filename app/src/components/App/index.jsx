@@ -7,11 +7,11 @@ const App = () => (
   <Container>
     <Divider section hidden />
     <Grid columns={2} stackable>
-      <Grid.Column>
-        <IssueList />
-      </Grid.Column>
-      <Grid.Column>
+      <Grid.Column width="6">
         <AddNewIssue />
+      </Grid.Column>
+      <Grid.Column width="10">
+        <IssueList />
       </Grid.Column>
     </Grid>
   </Container>
